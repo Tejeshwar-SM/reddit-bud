@@ -1,8 +1,8 @@
 export const siteConfig: SiteConfig = {
-    name: "Reddit Automation",
-    description: "Automate your Reddit tasks with ease.",
+    name: "Reddit Bud",
+    description: "Research Reddit faster.",
     longDescription:
-        "Reddit Automation is a powerful tool designed to help you automate various tasks on Reddit, such as posting, commenting, and managing your account. With an intuitive interface and robust features, you can save time and enhance your Reddit experience.",
+        "Reddit Bud is a research tool for exploring posts, comments, and communities on Reddit.",
     category: "Productivity",
     og: {
         url: "/og-image.webp",
@@ -13,9 +13,9 @@ export const siteConfig: SiteConfig = {
         name: "Koonei",
         url: "https://koonei.com",
     },
-    keywords: ["Reddit", "Automation", "Productivity", "Social Media", "Tools"],
+    keywords: ["Reddit", "Research", "Productivity", "Social Media", "Tools"],
     links: {},
-    contact: "contact@reddit-automation.com",
+    contact: "contact@reddit-bud.com",
     sidebar: [
         {
             title: "Getting Started",

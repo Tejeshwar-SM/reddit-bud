@@ -17,4 +17,4 @@ export const MESSAGES = {
     },
 } as const;
 
-export const AUTH_COOKIE_NAME = "reddit_automation__auth_token";
+export const AUTH_COOKIE_NAME = "reddit_bud__auth_token";

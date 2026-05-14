@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// import { AUTH_COOKIE_NAME } from "./config/const";
-// import { auth } from "./lib/jwt";
-// import { CResponse } from "./lib/utils";
+import { AUTH_COOKIE_NAME } from "./config/const";
+import { auth } from "./lib/jwt";
+import { CResponse } from "./lib/utils";
 
 const PUBLIC_PATHS = ["/auth/signin", "/api/auth/signin"];
 
@@ -18,34 +18,27 @@ export async function proxy(req: NextRequest) {
     if (url.pathname === "/auth")
         return NextResponse.redirect(new URL("/auth/signin", url));
 
-    // TODO: Implement auth and authorization logic here. For now, this is a no-op that allows all requests to proceed.
+    const isAuth = await auth();
 
-    // const isAuth = await auth();
-    //
-    // if (isAuth?.user) {
-    //     if (url.pathname.startsWith("/auth"))
-    //         return NextResponse.redirect(new URL("/", url));
-    //
-    //     if (url.pathname.startsWith("/dashboard")) {
-    //     }
-    //
-    //     if (url.pathname.startsWith("/api")) return res;
-    // } else {
-    //     if (url.pathname.startsWith("/api")) {
-    //         const response = CResponse({
-    //             message: "UNAUTHORIZED",
-    //             longMessage: "You are not signed in",
-    //         });
-    //         response.cookies.delete(AUTH_COOKIE_NAME);
-    //         return response;
-    //     }
-    //
-    //     const response = NextResponse.redirect(new URL("/auth/signin", url));
-    //     response.cookies.delete(AUTH_COOKIE_NAME);
-    //     return response;
-    // }
+    if (isAuth?.user) {
+        if (url.pathname.startsWith("/auth"))
+            return NextResponse.redirect(new URL("/dashboard", url));
 
-    return res;
+        return res;
+    }
+
+    if (url.pathname.startsWith("/api")) {
+        const response = CResponse({
+            message: "UNAUTHORIZED",
+            longMessage: "You are not signed in",
+        });
+        response.cookies.delete(AUTH_COOKIE_NAME);
+        return response;
+    }
+
+    const response = NextResponse.redirect(new URL("/auth/signin", url));
+    response.cookies.delete(AUTH_COOKIE_NAME);
+    return response;
 }
 
 export const config = {
